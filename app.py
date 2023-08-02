@@ -5,7 +5,7 @@ import seaborn as sns
 
 st.sidebar.title("Whatsapp Chat Analyzer")
 
-uploaded_file = st.sidebar.file_uploader("Choose a file")
+uploaded_file = st.sidebar.file_uploader("Choose a .txt file")
 if uploaded_file is not None:
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
@@ -13,7 +13,8 @@ if uploaded_file is not None:
 
     # fetch unique users
     user_list = df['user'].unique().tolist()
-    user_list.remove('group_notification')
+    if "group_notification" in user_list:
+        user_list.remove('group_notification')
     user_list.sort()
     user_list.insert(0,"Overall")
 
@@ -100,7 +101,7 @@ if uploaded_file is not None:
                 st.pyplot(fig)
             with col2:
                 st.dataframe(new_df)
-        st.markdown("<hr>", unsafe_allow_html=True)
+            st.markdown("<hr>", unsafe_allow_html=True)
 
         #Word cloud
         st.markdown('<h1 style="color: #128C7E;">{}</h1>'.format("Text Analysis"), unsafe_allow_html=True)
@@ -131,9 +132,8 @@ if uploaded_file is not None:
             st.dataframe(emoji_df)
         with col2:
         # Users that use the most emojis
-            st.markdown('<h2 style="color:#DCF8C6;">{}</h2>'.format("Users that use the emojis most"), unsafe_allow_html=True)
-            df['emoji_count']=df['message'].apply(helper.most_emoji_user)
-            user_emoji_count = df.groupby('user')['emoji_count'].sum().reset_index()
-            st.dataframe(user_emoji_count.sort_values("emoji_count",ascending=False))
-
-        
+            if selected_user=="Overall":
+                st.markdown('<h2 style="color:#DCF8C6;">{}</h2>'.format("Users that use the emojis most"), unsafe_allow_html=True)
+                df['emoji_count']=df['message'].apply(helper.most_emoji_user)
+                user_emoji_count = df.groupby('user')['emoji_count'].sum().reset_index()
+                st.dataframe(user_emoji_count[user_emoji_count['emoji_count']>0].sort_values("emoji_count",ascending=False))    
