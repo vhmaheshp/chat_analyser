@@ -1,15 +1,27 @@
 import re
 import pandas as pd
-
+from RegexGenerator import RegexGenerator
 def preprocess(data):
-    pattern = '\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\s-\s'
+
+    myRegexGenerator = RegexGenerator(data.split("-")[0])
+    pattern = myRegexGenerator.get_regex()
 
     messages = re.split(pattern, data)[1:]
+    messages_new=[]
+    for message in messages:
+        messages_new.append(message.strip("- "))
+    
     dates = re.findall(pattern, data)
+    dates_new=[]
+    for date in dates:
+        dates_new.append(date.strip("- "))
 
-    df = pd.DataFrame({'user_message': messages, 'message_date': dates})
+    df = pd.DataFrame({'user_message': messages_new, 'message_date': dates_new})
     # convert message_date type
-    df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M - ')
+    try:
+        df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M')
+    except:
+        df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %H:%M')
 
     df.rename(columns={'message_date': 'date'}, inplace=True)
 
