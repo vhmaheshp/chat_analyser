@@ -18,17 +18,8 @@ def preprocess(data):
 
     df = pd.DataFrame({'user_message': messages_new, 'message_date': dates_new})
     
-    try:
-        df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M')
-    except:
-        try:
-            df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%Y, %I:%M %p')
-        except:
-            try:
-                df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %H:%M')
-            except:
-                df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%Y, %I:%M %p')
-
+    df['message_date'] = pd.to_datetime(df['message_date'])
+    
     df.rename(columns={'message_date': 'date'}, inplace=True)
 
     users = []
