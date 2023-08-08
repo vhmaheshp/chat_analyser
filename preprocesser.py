@@ -17,11 +17,17 @@ def preprocess(data):
         dates_new.append(date.strip("- "))
 
     df = pd.DataFrame({'user_message': messages_new, 'message_date': dates_new})
-    # convert message_date type
+    
     try:
         df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%y, %H:%M')
     except:
-        df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %H:%M')
+        try:
+            df['message_date'] = pd.to_datetime(df['message_date'], format='%d/%m/%Y, %I:%M %p')
+        except:
+            try:
+                df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%y, %H:%M')
+            except:
+                df['message_date'] = pd.to_datetime(df['message_date'], format='%m/%d/%Y, %I:%M %p')
 
     df.rename(columns={'message_date': 'date'}, inplace=True)
 
