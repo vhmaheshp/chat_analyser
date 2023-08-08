@@ -9,11 +9,11 @@ if uploaded_file is None:
     st.markdown('<h1 style="color: #128C7E;">{}</h1>'.format("Whatsapp Chat Analyzer"), unsafe_allow_html=True)
     st.markdown('<h3 style="color: #DCF8C6;">{}</h2>'.format("Upload your whatsapp chat to see analysis on it."), unsafe_allow_html=True)
 
-
-if uploaded_file is not None:
-    bytes_data = uploaded_file.getvalue()
-    data = bytes_data.decode("utf-8")
-    try:
+try:
+    if uploaded_file is not None:
+        bytes_data = uploaded_file.getvalue()
+        data = bytes_data.decode("utf-8")
+    
         df = preprocesser.preprocess(data)
     
         # fetch unique users
@@ -157,6 +157,6 @@ if uploaded_file is not None:
                     df['emoji_count']=df['message'].apply(helper.most_emoji_user)
                     user_emoji_count = df.groupby('user')['emoji_count'].sum().reset_index()
                     st.dataframe(user_emoji_count[user_emoji_count['emoji_count']>0].sort_values("emoji_count",ascending=False)) 
-    except:
-        st.markdown('<h1 style="color: #128C7E;">{}</h1>'.format("Whatsapp Chat Analyzer"), unsafe_allow_html=True)
-        st.markdown('<h3 style="color: red">{}</h2>'.format("There seems to be an error, Try uploading the file with correct format."), unsafe_allow_html=True)
+except:
+    st.markdown('<h1 style="color: #128C7E;">{}</h1>'.format("Whatsapp Chat Analyzer"), unsafe_allow_html=True)
+    st.markdown('<h3 style="color: red">{}</h2>'.format("There seems to be an error, Try uploading the file with correct format."), unsafe_allow_html=True)
