@@ -1,11 +1,15 @@
 import streamlit as st
 import preprocesser,helper
 import matplotlib.pyplot as plt
-import seaborn as sns
 
-st.sidebar.title("Whatsapp Chat Analyzer")
+st.sidebar.title("Choose a .txt file")
+uploaded_file = st.sidebar.file_uploader("Select a whatsapp chat and click on export, then upload it here.")
 
-uploaded_file = st.sidebar.file_uploader("Choose a .txt file")
+if uploaded_file is None:
+    st.markdown('<h1 style="color: #128C7E;">{}</h1>'.format("Whatsapp Chat Analyzer"), unsafe_allow_html=True)
+    st.markdown('<h3 style="color: #DCF8C6;">{}</h2>'.format("Upload your whatsapp chat to see analysis on it."), unsafe_allow_html=True)
+
+
 if uploaded_file is not None:
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
@@ -42,6 +46,20 @@ if uploaded_file is not None:
             st.markdown('<h2 style="color: #DCF8C6;">{}</h2>'.format("Links shared"), unsafe_allow_html=True)
             st.markdown('<h3 style="color: #25D366;">{}</h3>'.format(num_links), unsafe_allow_html=True)
         
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            emoji_df,emoji_count= helper.emoji_counter(selected_user,df)
+
+            st.markdown('<h2 style="color: #DCF8C6;">{}</h2>'.format("Total Emojis used"), unsafe_allow_html=True)
+            st.markdown('<h3 style="color: #25D366;">{}</h3>'.format(emoji_count), unsafe_allow_html=True)
+        
+        with col2:
+
+            st.markdown('<h2 style="color: #DCF8C6;">{}</h2>'.format("Average number of words per message"), unsafe_allow_html=True)
+            st.markdown('<h3 style="color: #25D366;">{}</h3>'.format(round(words/num_messages,1)), unsafe_allow_html=True)
+
         st.markdown("<hr>", unsafe_allow_html=True)
 
         #Monthly timeline
@@ -125,8 +143,9 @@ if uploaded_file is not None:
 
         # Emoji analysis
         st.markdown('<h1 style="color:#128C7E;">{}</h1>'.format("Emoji Analysis"), unsafe_allow_html=True)
+            
         col1,col2 = st.columns(2)
-        emoji_df= helper.emoji_counter(selected_user,df)
+
         with col1:
             st.markdown('<h2 style="color: #DCF8C6;">{}</h2>'.format("Emoji count"), unsafe_allow_html=True)
             st.dataframe(emoji_df)
