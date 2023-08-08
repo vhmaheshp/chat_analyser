@@ -67,17 +67,6 @@ def most_used_words(selected_user,df):
     
     return df_1,df_wc
 
-def emoji_counter(selected_user,df):
-
-    if selected_user!="Overall":
-        df=df[df['user']==selected_user]
-
-    emojis=[]
-    for message in df['message']:
-        emojis.extend([c for c in message if c in emoji.UNICODE_EMOJI['en']])
-    emoji_df = pd.DataFrame(Counter(emojis).most_common(len(Counter(emojis))))
-    return emoji_df
-
 def monthly_timeline(selected_user,df):
 
     if selected_user!="Overall":
@@ -112,6 +101,22 @@ def week_activity_map(selected_user,df):
         df = df[df['user'] == selected_user]
 
     return df['day_name'].value_counts()
+
+def emoji_counter(selected_user,df):
+
+    if selected_user!="Overall":
+        df=df[df['user']==selected_user]
+
+    count=0
+    emojis=[]
+    for message in df['message']:
+        for c in message:
+            if c in emoji.UNICODE_EMOJI['en']:
+                count+=1
+                emojis.extend(c)
+    emoji_df = pd.DataFrame(Counter(emojis).most_common(len(Counter(emojis))),columns=['Emoji','Count'])
+
+    return emoji_df,count
 
 def most_emoji_user(text):
 
