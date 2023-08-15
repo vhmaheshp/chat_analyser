@@ -3,6 +3,7 @@ import preprocesser,helper
 import matplotlib.pyplot as plt
 
 st.sidebar.title("Choose a .txt file")
+st.sidebar.write("This app doesn't store or read your chats. So, you can upload them safely.")
 uploaded_file = st.sidebar.file_uploader("Select a whatsapp chat and click on export, then upload it here.")
 
 if uploaded_file is None:
