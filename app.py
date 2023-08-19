@@ -167,5 +167,30 @@ if uploaded_file is not None:
                         df['emoji_count']=df['message'].apply(helper.most_emoji_user)
                         user_emoji_count = df.groupby('user')['emoji_count'].sum().reset_index()
                         st.dataframe(user_emoji_count[user_emoji_count['emoji_count']>0].sort_values("emoji_count",ascending=False))    
+                st.markdown("<hr>", unsafe_allow_html=True)
+
+                if selected_user == 'Overall':
+                    temp_df=df[['date','user','message']]
+                    csv = temp_df.to_csv(index=False).encode("utf-8")
+                    st.markdown('<h2 style= color:#128C7E;">{}</h2>'.format("Download the chat in .csv format"), unsafe_allow_html=True)
+                    st.download_button(
+                    label="Download CSV",
+                    data=csv,
+                    file_name='chat.csv',
+                    mime='text/csv',
+                    help="Download the formatted chat as a CSV file",
+                    )
+                else:
+                    df = df[df['user'] == selected_user]
+                    temp_df=df[['date','user','message']]
+                    csv = temp_df.to_csv(index=False).encode("utf-8")
+                    st.markdown('<h2 style= color:#128C7E;">{}</h2>'.format("Download the chat in .csv format"), unsafe_allow_html=True)
+                    st.download_button(
+                    label="Download CSV",
+                    data=csv,
+                    file_name='chat.csv',
+                    mime='text/csv',
+                    help="Download the formatted chat as a CSV file",
+                    )
     except:
         st.markdown('<h4 style="text-align: center; color: red">{}</h4>'.format("There seems to be an error, try uploading the file with correct format."), unsafe_allow_html=True)
