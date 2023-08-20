@@ -12,7 +12,7 @@ st.markdown('<h1 style="text-align: center; color: #128C7E;">{}</h1>'.format("Wh
 
 if uploaded_file is None:
     st.markdown('<h3 style="text-align: center; color: #DCF8C6;">{}</h3>'.format("Upload your whatsapp chat to see analysis on it."), unsafe_allow_html=True)
-    st.markdown("** by [whatstk](https://www.linkedin.com/in/ansh-arora-1648a4226/)**")
+    st.markdown("**by [Ansh Arora](https://www.linkedin.com/in/ansh-arora-1648a4226/)**")
 st.markdown("<hr>", unsafe_allow_html=True)
 
 if uploaded_file is not None:
