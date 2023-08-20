@@ -9,6 +9,7 @@ uploaded_file = st.sidebar.file_uploader("Select a whatsapp chat and click on ex
 if uploaded_file is None:
     st.sidebar.write("This app doesn't store or read your chats. So, you can upload them safely.")
 st.markdown('<h1 style="text-align: center; color: #128C7E;">{}</h1>'.format("WhatsApp Chat Analyzer"), unsafe_allow_html=True)
+st.markdown('<h2 style="text-align: center; color: #128C7E;">{}</h2>'.format("**-by [Ansh Arora](https://www.linkedin.com/in/ansh-arora-1648a4226/)"), unsafe_allow_html=True)
 
 if uploaded_file is None:
     st.markdown('<h3 style="text-align: center; color: #DCF8C6;">{}</h3>'.format("Upload your whatsapp chat to see analysis on it."), unsafe_allow_html=True)
