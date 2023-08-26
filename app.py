@@ -8,8 +8,8 @@ uploaded_file = st.sidebar.file_uploader("Select a whatsapp chat and click on ex
 
 if uploaded_file is None:
     st.sidebar.write("This app doesn't store or read your chats. So, you can upload them safely.")
+    st.sidebar.markdown("Web App by **[Ansh Arora](https://www.linkedin.com/in/ansh-arora-1648a4226/)**")
 st.markdown('<h1 style="text-align: center; color: #128C7E;">{}</h1>'.format("WhatsApp Chat Analyzer"), unsafe_allow_html=True)
-st.sidebar.markdown("Web App by **[Ansh Arora](https://www.linkedin.com/in/ansh-arora-1648a4226/)**")
 
 if uploaded_file is None:
     st.markdown('<h3 style="text-align: center; color: #DCF8C6;">{}</h3>'.format("Upload your whatsapp chat to see analysis on it."), unsafe_allow_html=True)
@@ -32,7 +32,8 @@ if uploaded_file is not None:
         selected_user = st.sidebar.selectbox("Show analysis wrt",user_list)
     
         if st.sidebar.button("Show Analysis"):
-            
+
+            st.sidebar.markdown("Web App by **[Ansh Arora](https://www.linkedin.com/in/ansh-arora-1648a4226/)**")
             plt.style.use('dark_background')
             # Stats Area
             num_messages, words, num_media_messages, num_links = helper.fetch_stats(selected_user,df)
