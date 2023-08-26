@@ -33,7 +33,7 @@ if uploaded_file is not None:
     
         if st.sidebar.button("Show Analysis"):
 
-            st.sidebar.markdown("Web App by **[Ansh Arora](https://www.linkedin.com/in/ansh-arora-1648a4226/)**")
+            # st.sidebar.markdown("Web App by **[Ansh Arora](https://www.linkedin.com/in/ansh-arora-1648a4226/)**")
             plt.style.use('dark_background')
             # Stats Area
             num_messages, words, num_media_messages, num_links = helper.fetch_stats(selected_user,df)
